@@ -1,0 +1,30 @@
+{
+  "name": "qale",
+  "version": "0.1.2",
+  "description": "A product memory for product managers: meetings, decisions, promises and customer feedback, kept on your computer.",
+  "author": {
+    "name": "Qale",
+    "url": "https://qale.ai"
+  },
+  "homepage": "https://qale.ai",
+  "repository": "https://github.com/qale-ai/qale-plugin",
+  "skills": "./skills/",
+  "mcpServers": "./.codex.mcp.json",
+  "interface": {
+    "displayName": "Qale",
+    "shortDescription": "Ask what was decided, promised and asked for in your meetings",
+    "longDescription": "Qale reads your meeting transcripts and keeps what was decided, promised, asked for and changed in a folder of markdown files on your computer. Ask what you promised a customer, who needs to know about a change, or what a set of customer calls adds up to.",
+    "developerName": "Qale",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://qale.ai",
+    "privacyPolicyURL": "https://github.com/qale-ai/qale-plugin/blob/main/PRIVACY.md",
+    "termsOfServiceURL": "https://github.com/qale-ai/qale-plugin/blob/main/LICENSE",
+    "defaultPrompt": [
+      "Set up Qale with my licence key."
+    ]
+  }
+}

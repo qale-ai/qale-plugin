@@ -1,0 +1,20 @@
+{
+  "name": "qale",
+  "interface": {
+    "displayName": "Qale"
+  },
+  "plugins": [
+    {
+      "name": "qale",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

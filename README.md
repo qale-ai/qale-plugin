@@ -10,7 +10,8 @@ your disk.
 
 ## What you need
 
-- Claude Code.
+- Claude Code, or Codex (the CLI or the ChatGPT desktop app). Qale does not
+  run in Codex cloud tasks or in ChatGPT on the web.
 - Node.js 22.13 or later on your `PATH`. Check with `node --version`.
 - A Qale licence key.
 
@@ -23,6 +24,15 @@ In Claude Code:
 /plugin install qale@qale
 /qale-setup
 ```
+
+In Codex:
+
+```sh
+codex plugin marketplace add qale-ai/qale-plugin
+```
+
+Then install Qale from the plugin list in Codex, start a new chat, and ask
+Codex to set up Qale.
 
 `/qale-setup` asks for your memory folder, your inbox folder, your licence
 key and your name.
