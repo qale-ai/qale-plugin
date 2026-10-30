@@ -12,7 +12,8 @@ your disk.
 
 - One of these apps on a Mac or a Windows PC:
   - the Claude desktop app (Cowork) or Claude Code;
-  - the ChatGPT desktop app (Codex) or the Codex CLI.
+  - the ChatGPT desktop app (Codex) or the Codex CLI;
+  - Google Antigravity (the app, the CLI or the IDE).
 - Node.js 22.13 or later. Check with `node --version` in a terminal. If you
   do not have it, install the LTS version from https://nodejs.org.
 - A Qale licence key.
@@ -64,6 +65,17 @@ codex plugin add qale@qale
 ```
 
 Then start Codex and write "Set up Qale".
+
+## Install in Google Antigravity
+
+In a terminal:
+
+```sh
+agy plugin install https://github.com/qale-ai/qale-plugin
+```
+
+Then open Antigravity, start a new conversation and type `/qale-setup`.
+Qale shows under **Customizations > Installed** in the app.
 
 ## Set up
 
@@ -118,6 +130,12 @@ Codex CLI and the ChatGPT desktop app, in a terminal:
 
 ```sh
 npx -y @openai/codex plugin marketplace upgrade qale
+```
+
+Antigravity, in a terminal:
+
+```sh
+agy plugin install https://github.com/qale-ai/qale-plugin
 ```
 
 Then quit the app and open it again, and start a new session or chat. In

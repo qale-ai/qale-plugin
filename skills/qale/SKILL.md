@@ -16,7 +16,7 @@ If a tool returns `licence_required`, tell the user to run `/qale-setup`, and st
 ## No arguments: process the inbox
 
 1. Call `qale_next`. It sweeps the inbox and claims up to 2 jobs. If it returns no jobs, go to step 4.
-2. For each job id, start one `qale-analyst` subagent (in Claude Code its full name is `qale:qale-analyst`). Start all of them in one message, so that they run in parallel. Give each one only its job id, for example `Job id: job-mh2k3x9a-4f1c2b7e`. Do not read the transcripts yourself.
+2. For each job id, start one `qale-analyst` subagent (in Claude Code its full name is `qale:qale-analyst`). Start all of them in one message, so that they run in parallel. If you can choose the subagent's model, choose the strongest one (in Claude Code, `opus`). Give each one only its job id, for example `Job id: job-mh2k3x9a-4f1c2b7e`. Do not read the transcripts yourself.
 
    If you cannot start that subagent (some apps have none), do the jobs yourself, one at a time: call `qale_job` with the job id, follow its instructions exactly, and call `qale_submit` once with the extraction. The customer-meeting skill tells you how to read a customer meeting.
 3. Wait for all subagents. Report one line per job: the meeting title, the counts by type, and any failure. Never fix what a job wrote by editing a memory file yourself. If a fact looks wrong (a size, a stage, a name), tell the user; the fix goes through `qale_correct` or an edit the user asked for (see "Correct memory").

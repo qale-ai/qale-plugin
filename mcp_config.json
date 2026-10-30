@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "qale": {
+      "command": "node",
+      "args": ["${PLUGIN_ROOT}/server/dist/index.js"]
+    }
+  }
+}

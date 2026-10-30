@@ -1,0 +1,24 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "qale",
+  "displayName": "Qale",
+  "version": "0.1.4",
+  "description": "A product memory for product managers: meetings, decisions, promises and customer feedback, kept on your computer.",
+  "suggestedPrompts": [
+    "Set up Qale with my licence key.",
+    "What did we promise this customer?",
+    "Prep me for my next customer call."
+  ],
+  "author": {
+    "name": "Qale",
+    "url": "https://qale.ai"
+  },
+  "homepage": "https://qale.ai",
+  "repository": "https://github.com/qale-ai/qale-plugin",
+  "keywords": [
+    "product management",
+    "meetings",
+    "memory",
+    "customer feedback"
+  ]
+}
