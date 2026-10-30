@@ -68,14 +68,25 @@ Then start Codex and write "Set up Qale".
 
 ## Install in Google Antigravity
 
-In a terminal:
+The Antigravity app installs only from Google's Marketplace, and Qale is
+not there yet. Install it with the Antigravity CLI (`agy`) instead. The app
+then shows it too.
 
-```sh
-agy plugin install https://github.com/qale-ai/qale-plugin
-```
+1. If you do not have the CLI, install it in a terminal:
 
-Then open Antigravity, start a new conversation and type `/qale-setup`.
-Qale shows under **Customizations > Installed** in the app.
+   ```sh
+   curl -fsSL https://antigravity.google/cli/install.sh | bash
+   ```
+
+2. Install Qale:
+
+   ```sh
+   agy plugin install https://github.com/qale-ai/qale-plugin
+   ```
+
+3. Quit the Antigravity app and open it again. Qale shows under
+   **Customizations > Installed**.
+4. Start a new conversation and type `/qale-setup`.
 
 ## Set up
 
