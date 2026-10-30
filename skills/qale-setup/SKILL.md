@@ -23,5 +23,5 @@ It is safe to run this more than once. It keeps what is already set up.
    Call `qale_setup` with them as `company` and `product`. Qale writes `who-we-are.md` in the memory folder, once. It never writes over the file, so a second run keeps the user's edits.
 6. If a who-we-are note was written or exists, tell the user where it is. Ask them to open it and add the people on their team, with their roles, and what they call the people they build for. The analyst reads this note in every job to tell the user's side from the customer's side. It is plain text in their own words, under 2,000 characters.
 7. Call `qale_status` and show the result.
-8. Tell the user that Claude Code asks before each Qale tool call that the skills do not pre-approve. To stop these questions, the user can add `mcp__plugin_qale_qale` to `permissions.allow` in their Claude Code settings. A scheduled `/qale --unattended` run needs this, because nobody is there to answer.
+8. If the app asks the user before each Qale tool call, tell them how to stop it. In Claude Code, they add `mcp__plugin_qale_qale` to `permissions.allow` in their settings. A scheduled `/qale --unattended` run needs this, because nobody is there to answer.
 9. Tell the user that the next step is to put a transcript (`.vtt`, `.srt`, `.txt`, `.md` or `.docx`) in the inbox folder and run `/qale`.

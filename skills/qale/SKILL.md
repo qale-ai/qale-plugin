@@ -7,7 +7,7 @@ allowed-tools: mcp__plugin_qale_qale__qale_next, mcp__plugin_qale_qale__qale_rev
 
 # Qale
 
-The user ran `/qale $ARGUMENTS`. Pick the form that matches the arguments.
+The user ran `/qale` with these arguments: `$ARGUMENTS`. If the app did not fill them in there, take them from the user's message. Pick the form that matches the arguments.
 
 If the user asked a question about what memory knows, go to "Answer a question from memory", even when there are no arguments. Process the inbox only when the user ran `/qale` with no arguments and no question, or asked for it.
 
@@ -16,17 +16,17 @@ If a tool returns `licence_required`, tell the user to run `/qale-setup`, and st
 ## No arguments: process the inbox
 
 1. Call `qale_next`. It sweeps the inbox and claims up to 2 jobs. If it returns no jobs, go to step 4.
-2. For each job id, start one `qale:qale-analyst` subagent. Start all of them in one message, so that they run in parallel. Give each one only its job id, for example `Job id: job-mh2k3x9a-4f1c2b7e`. Do not read the transcripts yourself.
+2. For each job id, start one `qale-analyst` subagent (in Claude Code its full name is `qale:qale-analyst`). Start all of them in one message, so that they run in parallel. Give each one only its job id, for example `Job id: job-mh2k3x9a-4f1c2b7e`. Do not read the transcripts yourself.
 
    If you cannot start that subagent (some apps have none), do the jobs yourself, one at a time: call `qale_job` with the job id, follow its instructions exactly, and call `qale_submit` once with the extraction. The customer-meeting skill tells you how to read a customer meeting.
 3. Wait for all subagents. Report one line per job: the meeting title, the counts by type, and any failure. Never fix what a job wrote by editing a memory file yourself. If a fact looks wrong (a size, a stage, a name), tell the user; the fix goes through `qale_correct` or an edit the user asked for (see "Correct memory").
 4. Call `qale_review` and show the user what changed in memory.
 5. If the review lists commitments that need a ticket, ask the user which ones they want as tickets. Qale does not write to Jira. For each one the user picks:
    1. Call `qale_read` with its id, for the title, the owner, the due date and the quotes.
-   2. Create the ticket with the user's own Jira tool (the Atlassian connector in their Claude). That tool asks the user to approve the call. Use the title as the summary, and the text and quotes as the description.
+   2. Create the ticket with the user's own Jira tool (for example the Atlassian connector in their AI app). That tool asks the user to approve the call. Use the title as the summary, and the text and quotes as the description.
    3. Call `qale_link_ticket` with the commitment id and the new ticket key.
 
-   If no Jira tool is available, tell the user that Qale cannot make tickets itself and that they can connect Atlassian in Claude. List the commitments, so that they can make the tickets by hand and give you the keys to link.
+   If no Jira tool is available, tell the user that Qale cannot make tickets itself and that they can connect Atlassian in their AI app. List the commitments, so that they can make the tickets by hand and give you the keys to link.
 
 Memory changes are already written when a job ends. They do not need approval. The user can undo a batch with `/qale undo <batchId>`, and take back a linked ticket with git, like any other edit.
 
@@ -43,7 +43,7 @@ Memory changes are already written when a job ends. They do not need approval. T
 - `review`: do steps 4 and 5.
 - `status`: call `qale_status` and show the result. If it lists failed or undone items, tell the user that `/qale retry <itemId>` runs one again. The item id is at the end of the item's line, after the word `item`: `- Prissättning (item item-mh2k3x9a-4f1c2b7e)`.
 - `retry <itemId>` (one or more ids of failed or undone items): call `qale_next` with `{ retry: [<itemId>, ...] }`. Those items go back to the queue and are claimed first. Then do steps 2 to 5 above. Retry only the items the user named.
-- `undo <batchId>`: call `qale_undo` with the batch id. Claude Code asks the user before it runs, because undo changes memory. Show which memory changes went back and the last line of the reply, which gives the command to run the transcript again (`/qale retry <itemId>`).
+- `undo <batchId>`: call `qale_undo` with the batch id. The app may ask the user before it runs, because undo changes memory. Show which memory changes went back and the last line of the reply, which gives the command to run the transcript again (`/qale retry <itemId>`).
 
 ## Answer a question from memory
 
@@ -75,12 +75,12 @@ Use this when the user asks what memory knows, with or without `/qale`. Each ste
 
 When the user corrects memory, change it on their word. Only on their word: never edit a memory file because you think a job got something wrong. Say what looks wrong and let the user decide.
 
-- One field on a note: edit the memory file with the Edit tool. The file is `<memory folder>/<note id>.md`; `qale_status` gives the memory folder. The fields are `status: done` or `status: dropped` on a commitment, `firmness`, `due`, `owner`, and `aliases` on a party. If a note was never a claim, tell the user the file to delete (`<memory folder>/<id>.md`). If they prefer, set `needs_review: true` and add a line "Not a claim, per the user on <date>" with Edit; Qale commits the edit. Qale commits a hand edit on its own before its next write and reindexes it, so no tool call is needed.
+- One field on a note: edit the memory file with your file edit tool. The file is `<memory folder>/<note id>.md`; `qale_status` gives the memory folder. The fields are `status: done` or `status: dropped` on a commitment, `firmness`, `due`, `owner`, and `aliases` on a party. If a note was never a claim, tell the user the file to delete (`<memory folder>/<id>.md`). If they prefer, set `needs_review: true` and add a line "Not a claim, per the user on <date>" with Edit; Qale commits the edit. Qale commits a hand edit on its own before its next write and reindexes it, so no tool call is needed.
 - "That promise was kept" or "we dropped it": call `qale_correct` with `{ action: "close", commitmentId, state: "done" or "dropped", what }`. `what` is what the user said happened, if they said it. Qale writes a change record dated today that closes the commitment.
 - "I told them": call `qale_correct` with `{ action: "told", to: [party ids], about, relatedTo }`. `relatedTo` is the commitment or decision it was about, if there is one.
 - "These two are the same person" (or customer): call `qale_correct` with `{ action: "same_party", keep, remove }`. Keep the party with more links. Qale moves every link to the kept party and deletes the other note.
 
-Claude Code asks the user before `qale_correct` runs. Each correction is one commit; the reply gives the `git revert` command that takes it back.
+The app may ask the user before `qale_correct` runs. Each correction is one commit; the reply gives the `git revert` command that takes it back.
 
 ## `--unattended`
 
