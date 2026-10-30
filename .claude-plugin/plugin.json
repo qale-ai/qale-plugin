@@ -1,0 +1,10 @@
+{
+  "name": "qale",
+  "displayName": "Qale",
+  "version": "0.1.0",
+  "description": "Turn meeting transcripts into updates to your local product memory.",
+  "author": {
+    "name": "Qale"
+  },
+  "license": "UNLICENSED"
+}

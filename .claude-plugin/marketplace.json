@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "qale",
+  "description": "The Qale plugin: a product memory for product managers.",
+  "owner": {
+    "name": "Qale"
+  },
+  "plugins": [
+    {
+      "name": "qale",
+      "description": "Turn meeting transcripts into updates to your local product memory.",
+      "version": "0.1.0",
+      "source": "./"
+    }
+  ]
+}
